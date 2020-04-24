@@ -95,5 +95,18 @@ namespace AutoFixtureUnitTest
             // Assert
             Assert.IsType<NoSpecimen>(result);
         }
+
+        [Fact]
+        public void CreateWithValueTypeWithoutPublicWritableMembersWillReturnCorrectResult()
+        {
+            // Arrange
+            var request = typeof(UnitType);
+            var sut = new MutableValueTypeGenerator();
+            // Act
+            var dummyContainer = new DelegatingSpecimenContext();
+            var result = sut.Create(request, dummyContainer);
+            // Assert
+            Assert.IsType<UnitType>(result);
+        }
     }
 }

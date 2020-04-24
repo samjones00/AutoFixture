@@ -161,10 +161,15 @@ namespace AutoFixture
                                 new EnumerableRelay(),
                                 new EnumeratorRelay())),
                         new FilteringSpecimenBuilder(
+                            new MutableValueTypeGenerator(),
+                            new UnitTypeSpecification()),
+                        new FilteringSpecimenBuilder(
                             new MutableValueTypeWarningThrower(),
                             new AndRequestSpecification(
                                 new ValueTypeSpecification(),
-                                new NoConstructorsSpecification())))));
+                                new NoConstructorsSpecification(),
+                                new InverseRequestSpecification(
+                                    new UnitTypeSpecification()))))));
 
             this.UpdateGraphAndSetupAdapters(newGraph, Enumerable.Empty<ISpecimenBuilderTransformation>());
 

@@ -4735,6 +4735,29 @@ namespace AutoFixtureUnitTest
             Assert.InRange(result.Last().Property.Parameter, TriState.First, TriState.Third);
         }
 
+        [Fact]
+        public void CreateUnitTypeWithSupportMutableValueTypeCustomizationShouldCreateUnitType()
+        {
+            // Arrange
+            var sut = new Fixture();
+            sut.Customize(new SupportMutableValueTypesCustomization());
+            // Act
+            var result = sut.Create<UnitType>();
+            // Assert
+            Assert.Equal(new UnitType(), result);
+        }
+
+        [Fact]
+        public void CreateUnitTypeWithoutSupportMutableValueTypeCustomizationShouldCreateUnitType()
+        {
+            // Arrange
+            var sut = new Fixture();
+            // Act
+            var result = sut.Create<UnitType>();
+            // Assert
+            Assert.Equal(new UnitType(), result);
+        }
+
         // Supporting http://autofixture.codeplex.com/discussions/262288 Breaking this test might not be considered a breaking change
         [Fact]
         public void RefreezeHack()

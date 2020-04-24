@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Reflection;
 
 namespace AutoFixture.Kernel
 {
@@ -13,15 +14,18 @@ namespace AutoFixture.Kernel
             }
 
             return request is Type type
-                   && type.IsValueType
+                   && IsValueType(type)
                    && HasNoPublicProperties(type)
                    && HasNoPublicFields(type);
         }
 
+        private static bool IsValueType(Type type) =>
+            type.GetTypeInfo().IsValueType;
+
         private static bool HasNoPublicProperties(Type type) =>
-            !type.GetProperties().Any();
+            !type.GetTypeInfo().GetProperties().Any();
 
         private static bool HasNoPublicFields(Type type) =>
-            !type.GetFields().Any();
+            !type.GetTypeInfo().GetFields().Any();
     }
 }
